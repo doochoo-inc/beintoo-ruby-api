@@ -26,7 +26,8 @@ module Beintoo
           end
           @beintoo_user
         rescue Beintoo::UserAlreadyRegisteredException => e
-          Beintoo.get_connect_url self.send(par[:guid_field])
+          @beintoo_user = nil
+          return Beintoo.get_connect_url self.send(par[:guid_field])
         end
       end
 
