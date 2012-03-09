@@ -2,7 +2,7 @@ module Beintoo
   class Vgood
     RESOURCE = "vgood"
 
-    ATTRIBUTES = %w{getRealURL showURL description descriptionSmall id imageUrl imageSmallUrl startdate enddate name bedollars discount VgoodPoiWrapper  whoAlsoConverted  categories isBanner contentType content rewardText shareURL uvext}
+    ATTRIBUTES = %w{getRealURL showURL description descriptionSmall id imageUrl imageSmallUrl startdate enddate name bedollars discount VgoodPoiWrapper  whoAlsoConverted  categories isBanner contentType content rewardText shareURL uvext vgoodPOIs}
 
     ATTRIBUTES.each do |a|
       self.send("attr_accessor", a)
@@ -10,7 +10,7 @@ module Beintoo
 
     def initialize(params = {})
       params.each do |a,v|
-        self.send("#{a}=", v)
+        self.send("#{a}=", v) rescue nil
       end
     end
 
@@ -63,6 +63,8 @@ module Beintoo
       true
     end
 
+    # see http://documentation.beintoo.com/home/api-docs/resources/vgood
+    # Returns a vgood, this method act as Vgood.getByUser but providing player guid instead of userExt.
     def self.byplayer(player = nil)
       raise Beintoo::ApiException, "Called Vgood.byplayer without passing a player!" if !player.logged_in?
       headers = Beintoo::build_headers
