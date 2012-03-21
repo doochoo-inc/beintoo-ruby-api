@@ -43,6 +43,9 @@ module Beintoo
         @beintoo_user.list_rewards
       end
 
+      define_method 'beintoo_rewards_iframe_url' do
+        @beintoo_player.rewards_iframe_url
+      end
     end
   end
 end

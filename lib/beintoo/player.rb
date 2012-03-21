@@ -28,6 +28,9 @@ module Beintoo
       result = Beintoo::get "#{RESOURCE}/login", headers, params_get
       self.guid = result["guid"]
       self.logged_in = true
+      if result.has_key? :playerScore
+        self.score = result[:playerScore]
+      end
       if result.has_key? "user"
         self.b_user = Beintoo::User.new result["user"].merge(guid: guid)
         self.b_user.created = true
@@ -98,5 +101,8 @@ module Beintoo
       Beintoo::Vgood.byplayer(self)
     end
 
+    def rewards_iframe_url
+      "http://www.beintoo.com/m/marketplace.html?apikey=#{Beintoo::apikey}&guid=#{guid}"
+    end
   end
 end
